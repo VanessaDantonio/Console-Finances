@@ -86,3 +86,64 @@ var finances = [
 ['Jan-2017', 138230],
 ['Feb-2017', 671099]
 ];
+
+// Financial Analysis
+console.log("Financial Analysis");
+console.log("----------------------------");
+
+// Creating two separate arrays for date and for Profit/Losses
+let monthYear = []
+let profitLosses = []
+for (let i = 0; i < finances.length; i++) {
+    monthYear.push(finances[i][0]);
+    profitLosses.push(finances[i][1]);
+}
+
+// Calculating the total number of months included in the dataset
+let numberOfMonths = finances.length;
+console.log("Total Months: " + numberOfMonths);
+
+// Calculating the net total amount of Profit/Losses over the entire period
+let netTotal = 0;
+for (let i = 0; i < profitLosses.length; i++) {
+    netTotal = netTotal + profitLosses[i];
+}
+console.log("Total: $" + netTotal);
+
+// Calculating the average of the changes in Profit/Losses over the entire period
+let totalChanges = 0;
+let changes = [];
+profitLosses.splice(0, 0, 0);
+for (let i = 0; i < profitLosses.length-1; i++) {
+    let differenceBetweenMonths = profitLosses[i+1] - profitLosses[i];
+    totalChanges = totalChanges + differenceBetweenMonths;
+    changes.push(differenceBetweenMonths);
+}
+
+let averageChange = 0;
+averageChange = totalChanges/numberOfMonths
+
+//Adding toFixed(2) method in order to show only 2 decimals
+console.log("Average  Change: $" + averageChange.toFixed(2));
+
+//Calculating the greatest increase in profits
+let maxIncrease = changes[0];
+for (let i = 1; i < changes.length; i++) {
+    if (changes[i] > maxIncrease) {
+        maxIncrease = changes[i];
+    }
+}
+
+let bestMonth = changes.indexOf(maxIncrease);
+console.log("Greatest Increase in Profits: " + monthYear[bestMonth] +" $" + maxIncrease);
+
+// Calculating the greatest decrease in profits
+let maxDecrease = changes[0];
+for (let i = 1; i < changes.length; i++) {
+    if (changes[i] < maxDecrease) {
+        maxDecrease = changes[i];
+    }
+}
+
+let worstMonth = changes.indexOf(maxDecrease);
+console.log("Greatest Decrease in Profits: " + monthYear[worstMonth] +" $" + maxDecrease);
